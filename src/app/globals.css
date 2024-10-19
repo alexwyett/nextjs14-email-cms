@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.content {
+  @apply flex flex-col gap-4;
+
+  h1,
+  h2,
+  h3 {
+    @apply uppercase text-[18px] !font-bold text-blue-900;
+  }
+
+  a, a:active, a:visited {
+    @apply text-blue-300 underline;
+  }
+
+  ul, ol {
+    list-style-type: disc;
+    @apply flex flex-col gap-3 px-4;
+  }
+
+  ol {
+    list-style-type: lower-roman;
+  }
+
+  &--sm {
+    &, p, li, span, td {
+      @apply !text-[12px];
+    }
+  }
+}
