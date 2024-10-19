@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { matter } from "md-front-matter";
 import { revalidatePath, revalidateTag } from "next/cache";
-import { EDITORS } from "@/constants";
 import { SiteMKDown } from "@/lib/getPage";
 import { UploadFile } from "@/lib/s3";
 import { slugify } from "@/lib/slugify";
@@ -14,6 +13,8 @@ import downloadUploadFile from "@/lib/downloadUploadFile";
 export async function POST(request: Request) {
   try {
     const { payload, attachments } = await request.json();
+
+    const EDITORS = (process.env.EDITORS || '').split(',');
 
     if (!payload) {
       throw new Error('Payload is missing')
