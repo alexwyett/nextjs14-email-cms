@@ -19,7 +19,7 @@ S3_SECRET_KEY=
 S3_ACCESS_KEY=
 S3_BUCKET_NAME=
 S3_REGION=
-S3_BASE_URL=https://BUCKET.s3.REGION.amazonaws.com/
+NEXT_PUBLIC_S3_BASE_URL=https://BUCKET.s3.REGION.amazonaws.com/
 EDITORS=youremailaddress@something.com,anotheremail@something.com
 BASE_URL=http://localhost:3000/
 ```
