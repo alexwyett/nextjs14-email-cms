@@ -11,7 +11,7 @@ export default function Article({ data: { title, thumbnail, description }, excer
     <article
       className="bg-white rounded-sm p-4 relative flex flex-col gap-4" 
     >
-      <Link href={`/${href}`} className="absolute w-full h-full top-0 left-0"></Link>
+      <Link href={`/${href}`} className="absolute w-full h-full top-0 left-0 z-10"></Link>
       <figure 
         className={
           classNames(
@@ -32,7 +32,7 @@ export default function Article({ data: { title, thumbnail, description }, excer
       </figure>
       <h2 className="p-0 m-0 uppercase font-bold text-nbadark">{title}</h2>
       <p className="line-clamp-3 mb-16">{description || excerpt}</p>
-      <Button className="absolute right-4 bottom-4">Read More</Button>
+      <Button className="absolute right-4 bottom-4 pointer-events-none">Read More</Button>
     </article>
   )
 }
