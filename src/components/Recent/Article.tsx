@@ -22,7 +22,7 @@ export default function Article({ data: { title, thumbnail, description }, excer
           )
         }>
         <img 
-          src={thumbnail ? `${S3_BASE_URL}${href}/${thumbnail}` : '/shuttle.png'} 
+          src={thumbnail ? `${S3_BASE_URL}${href}/${thumbnail}` : '/transparent.png'} 
           className={
             classNames(
               "object-cover h-full w-full"
