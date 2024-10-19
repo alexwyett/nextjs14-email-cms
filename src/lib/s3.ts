@@ -4,7 +4,7 @@ import { basename } from "path";
 
 export function Client() {
   return new S3Client({
-    region: 'eu-north-1',
+    region: process.env.S3_REGION,
     credentials: {
       accessKeyId: process.env.S3_ACCESS_KEY!,
       secretAccessKey: process.env.S3_SECRET_KEY!
