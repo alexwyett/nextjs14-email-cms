@@ -1,9 +1,9 @@
+import { S3 } from "@cagen/ezsite-components";
 import { MetadataRoute } from "next";
 import { BASE_URL } from "@/constants";
-import { ListObjects } from "@/lib/s3";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const files = ((await ListObjects()).Contents || []).filter(c => c.Key?.endsWith('.md'));
+  const files = ((await S3.ListObjects()).Contents || []).filter(c => c.Key?.endsWith('.md'));
 
   return [{
     url: BASE_URL,
