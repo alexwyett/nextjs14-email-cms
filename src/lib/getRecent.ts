@@ -1,6 +1,6 @@
+import { S3 } from "@cagen/ezsite-components";
 import { S3_BASE_URL } from "@/constants";
 import getPage, { SiteMKDown } from "./getPage";
-import { UploadFile } from "./s3";
 
 export async function removeAttachment(page: `${string}/index.md`) {
   return await remove('attachments.json', page);
@@ -13,7 +13,7 @@ export async function removeRecent(page: `${string}/index.md`) {
 export async function remove(filename: `${string}.json`, page: `${string}/index.md`) {
   const recent = await getJson(filename);
 
-  await UploadFile(
+  await S3.UploadFile(
     filename,
     JSON.stringify(
       recent.filter(r => r.Key !== page)
@@ -26,7 +26,7 @@ export async function remove(filename: `${string}.json`, page: `${string}/index.
 export async function update(filename: `${string}.json`, pages: (`${string}/index.md`)[]) {
   const recent = await getJson(filename);
 
-  await UploadFile(
+  await S3.UploadFile(
     filename,
     JSON.stringify(
       pages.map(p => ({ Key: p })).concat(recent)

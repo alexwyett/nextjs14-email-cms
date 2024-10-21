@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
 import { matter } from "md-front-matter";
 import { revalidatePath, revalidateTag } from "next/cache";
+import { S3 } from "@cagen/ezsite-components";
 import { SiteMKDown } from "@/lib/getPage";
-import { UploadFile } from "@/lib/s3";
 import { slugify } from "@/lib/slugify";
 import stripTags from "@/lib/stripTags";
 import getExcerpt from "@/lib/getExcerpt";
 import { removeAttachment, removeRecent, updateAttachments, updateRecent } from "@/lib/getRecent";
 import deletePage from "@/lib/deletePage";
-import downloadUploadFile from "@/lib/downloadUploadFile";
 
 export async function POST(request: Request) {
   try {
@@ -83,7 +82,7 @@ export async function POST(request: Request) {
 
     console.log(data, contentPlain, Key)
 
-    await UploadFile(
+    await S3.UploadFile(
       `${Key}/index.md`,
       `${data.length > 0 ? `---\r\n` : ''}${data.map(c => `${c.key}: ${c.val}`).join('\r\n')}${data.length > 0 ? `\r\n---\r\n` : ''}${markdown.content}`,
       'text/plain',
@@ -100,7 +99,7 @@ export async function POST(request: Request) {
       otherAttachments.map(
         async (a: any) => {
           try {
-            return await downloadUploadFile(a.url, a.filename, Key)
+            return await S3.DownloadUploadFile(a.url, a.filename, Key)
           } catch (e: any) {
             console.log(e);
             return '';

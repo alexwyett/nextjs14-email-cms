@@ -1,8 +1,8 @@
 
 import { FrontMatterData, matter } from 'md-front-matter';
+import { S3 } from '@cagen/ezsite-components';
 import { S3_BASE_URL } from "@/constants";
 import getExcerpt from './getExcerpt';
-import { GetObject, ListObjects, PageFile } from './s3';
 
 export type SiteMKDown = {
   data: FrontMatterData & {
@@ -17,7 +17,7 @@ export type SiteMKDown = {
   content: string;
   excerpt: string;
   href: string;
-  files: PageFile[];
+  files: S3.PageFile[];
 }
 
 export default async function getPage(slug: string|string[]): Promise<SiteMKDown> {
@@ -41,12 +41,12 @@ export default async function getPage(slug: string|string[]): Promise<SiteMKDown
   page.files = [];
 
   if (page?.data?.attachments) {
-    const files = await ListObjects(fullSlug);
+    const files = await S3.ListObjects(fullSlug);
     if (files.Contents) {
       page.files = await Promise.all(
         files.Contents.filter(
           c => c.Key && !c.Key?.includes('index.md') && !c.Key?.toLowerCase().endsWith('.png') && !c.Key?.toLowerCase().endsWith('.jpg') && !c.Key?.toLowerCase().endsWith('.webp')
-        ).map(async c => await GetObject(c.Key!))
+        ).map(async c => await S3.GetObject(c.Key!))
       );
     }
 

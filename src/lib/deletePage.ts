@@ -1,14 +1,14 @@
-import { DeleteFile, ListObjects } from "./s3";
+import { S3 } from "@cagen/ezsite-components";
 
 export default async function deletePage(slug: string): Promise<undefined> {
-  const obj = await ListObjects(slug);
+  const obj = await S3.ListObjects(slug);
 
   if (obj.Contents) {
     await Promise.all(
       obj.Contents.filter(
         c => c.Key
       ).map(
-        async c => await DeleteFile(c.Key!)
+        async c => await S3.DeleteFile(c.Key!)
       )
     )
   }
